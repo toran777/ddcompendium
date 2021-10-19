@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".InsertCharacter">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="@string/create_character"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/et_borders_light" />
+
+    <EditText
+        android:id="@+id/characterInputName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="character name"
+        android:background="@android:color/transparent"
+        android:hint="@string/insert_your_character_name"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/et_borders_light" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/classes"
+        android:paddingStart="7dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="7dp"
+        android:paddingBottom="15dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/et_borders_light" />
+
+</LinearLayout>

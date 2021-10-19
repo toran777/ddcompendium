@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">DnD Compendium</string>
+    <string name="login">Log In</string>
+    <string name="password">Password</string>
+    <string name="email_username">Email or username</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_in">Sign In.</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="conf_password">Confirm password</string>
+    <string name="register">Sign Up</string>
+    <string name="yes_account">Already have an account?</string>
+    <string name="log_in">Log In.</string>
+    <string name="get_help">Get Help.</string>
+    <string name="forgot_account">Did you forget your credentials?</string>
+    <string name="send">Send</string>
+    <string name="name">Name</string>
+    <string name="classe">Class</string>
+    <string name="spells">Spells</string>
+    <string name="add_character">add character</string>
+    <string name="insert_your_character_name">Insert your character name</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="classes">
+        <item>Wizard</item>
+        <item>Barbarian</item>
+        <item>Sorcerer</item>
+        <item>Bard</item>
+        <item>Paladin</item>
+        <item>Cleric</item>
+        <item>Druid</item>
+    </string-array>
+
+    <string name="generic_error">Generic Error</string>
+    <string name="search">Search</string>
+    <string name="character_image">character_image</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="create_character">Create Character</string>
+    <string name="swipe_to_delete">Swipe to delete</string>
+    <string name="delete_character">delete character</string>
+    <string name="add_spell">Add spell</string>
+    <string name="select_character">Select character</string>
+</resources>

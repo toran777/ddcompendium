@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressBarButton">
+        <attr name="android:text" format="string" />
+        <attr name="android:enabled" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TextViewButton">
+        <attr name="android:title" format="string" />
+        <attr name="android:subtitle" format="string" />
+    </declare-styleable>
+</resources>

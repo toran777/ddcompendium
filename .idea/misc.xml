@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3651041666666667" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/drawable/rounded_btn.xml" value="0.3651041666666667" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/drawable/rounded_et.xml" value="0.3651041666666667" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/font/fonts.xml" value="0.37916666666666665" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_character_detail.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_forgot_credentials.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_insert_character.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_insert_spell.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_main.xml" value="0.19114583333333332" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_register.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/activity_spell_detail.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/character_item.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/double_text_view.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/edit_text.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/layout_character_fragment.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/layout_spells_fragment.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/progress_bar_button.xml" value="0.3489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/layout/spell_item.xml" value="0.21875" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/menu/menu.xml" value="0.21875" />
+        <entry key="..\:/AndroidStudioProjects/DDCompendium/app/src/main/res/menu/menu_main.xml" value="0.3489583333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
