@@ -88,7 +88,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void findUser(String username, Callback<User> callback) {
         HashMap<String, String> data = new HashMap<>();
-        data.put("username", username);
+        data.put("query", username);
 
         mRequests.post(Request.Method.POST, SERVER_URL + "/QueryUser", data, new RequestsCallback() {
             @Override

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="@string/select_character"
+        android:text="@string/select_user"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -18,12 +18,16 @@
         android:layout_height="1dp"
         android:background="@color/et_borders_light" />
 
-    <Spinner
-        android:id="@+id/spinner"
+    <EditText
+        android:id="@+id/selectUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="7dp"
-        android:paddingEnd="7dp" />
+        android:autofillHints="username"
+        android:background="@android:color/transparent"
+        android:hint="@string/who_do_you_want_to_share_it_with"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"

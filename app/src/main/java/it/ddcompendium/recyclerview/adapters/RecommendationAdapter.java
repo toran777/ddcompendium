@@ -17,9 +17,11 @@ import it.ddcompendium.recyclerview.adapters.items.UserItem;
 
 public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<ListItem> items;
+    private final SpellsAdapter.OnSpellClick mOnSpellClick;
 
-    public RecommendationAdapter(List<ListItem> items) {
+    public RecommendationAdapter(List<ListItem> items, SpellsAdapter.OnSpellClick onSpellClick) {
         this.items = items;
+        this.mOnSpellClick = onSpellClick;
     }
 
     @NonNull
@@ -28,7 +30,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == ListItem.TYPE_SPELLS) {
             View view = inflater.inflate(R.layout.spell_item, parent, false);
-            return new SpellsAdapter.Holder(view, null);
+            return new SpellsAdapter.Holder(view, mOnSpellClick);
         } else {
             View view = inflater.inflate(R.layout.layout_header, parent, false);
             return new HeaderHolder(view);
@@ -65,7 +67,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public HeaderHolder(View view) {
             super(view);
-            textView = (TextView) view.findViewById(R.id.username);
+            textView = view.findViewById(R.id.username);
         }
     }
 }

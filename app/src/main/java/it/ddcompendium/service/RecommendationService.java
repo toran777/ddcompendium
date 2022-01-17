@@ -11,7 +11,7 @@ import it.ddcompendium.service.responses.Status;
 public interface RecommendationService extends Service {
     void getAll(User to, Callback<List<Recommendation>> callback);
 
-    void add(User by, User to, Spell spell, Callback<Status> callback);
+    void add(Integer by, Integer to, Integer spell, Callback<Status> callback);
 
-    void delete(Recommendation recommendation, Callback<Status> callback);
+    void delete(Integer id, Callback<Status> callback);
 }

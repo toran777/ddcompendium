@@ -45,4 +45,7 @@
     <string name="delete_character">delete character</string>
     <string name="add_spell">Add spell</string>
     <string name="select_character">Select character</string>
+    <string name="share">Share</string>
+    <string name="select_user">Select User</string>
+    <string name="who_do_you_want_to_share_it_with">Who do you want to share it with?</string>
 </resources>

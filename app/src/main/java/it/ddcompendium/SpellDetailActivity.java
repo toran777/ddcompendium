@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,6 +80,8 @@ public class SpellDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_add) {
             new InsertSpell(this, mSpell, mUser.getId()).show(getSupportFragmentManager(), null);
+        } else if (item.getItemId() == R.id.menu_share) {
+            new ShareSpell(this, mSpell, mUser.getId()).show(getSupportFragmentManager(), null);
         }
 
         return true;

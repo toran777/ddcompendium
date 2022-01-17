@@ -9,7 +9,6 @@ import com.android.volley.VolleyError;
 import java.util.HashMap;
 import java.util.List;
 
-import it.ddcompendium.entities.Spell;
 import it.ddcompendium.entities.Recommendation;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.requests.Callback;
@@ -52,11 +51,11 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public void add(User by, User to, Spell spell, Callback<Status> callback) {
+    public void add(Integer by, Integer to, Integer spell, Callback<Status> callback) {
         HashMap<String, String> data = new HashMap<>();
-        data.put("user_by", by.getId() + "");
-        data.put("user_to", to.getId() + "");
-        data.put("spell_id", spell.getId() + "");
+        data.put("user_by", by + "");
+        data.put("user_to", to + "");
+        data.put("spell_id", spell + "");
 
         requests.post(Request.Method.POST, SERVER_URL + "/Recommend", data, new RequestsCallback() {
             @Override
@@ -79,8 +78,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public void delete(Recommendation recommendation, Callback<Status> callback) {
-        requests.post(Request.Method.DELETE, SERVER_URL + "/Recommend?id=" + recommendation.getId(), null, new RequestsCallback() {
+    public void delete(Integer id, Callback<Status> callback) {
+        requests.post(Request.Method.DELETE, SERVER_URL + "/Recommend?id=" + id, null, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
