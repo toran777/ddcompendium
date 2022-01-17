@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DDCompendium"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ShareActivity"
+            android:exported="false" />
+        <activity
             android:name=".SpellDetailActivity"
             android:exported="true" />
         <activity

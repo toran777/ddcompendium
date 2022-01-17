@@ -1,5 +1,6 @@
 package it.ddcompendium.requests;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -7,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 public class Requests {
+    @SuppressLint("StaticFieldLeak")
     private static Requests instance;
     private final Context ctx;
     private RequestQueue requestQueue;
