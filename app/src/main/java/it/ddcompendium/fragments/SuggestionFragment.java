@@ -41,6 +41,7 @@ public class SuggestionFragment extends Fragment implements SpellsAdapter.OnSpel
     // Variables
     private RecommendationService mService;
     private RecommendationAdapter mAdapter;
+    private User mUser;
     private final ItemTouchHelper.SimpleCallback mHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -57,8 +58,7 @@ public class SuggestionFragment extends Fragment implements SpellsAdapter.OnSpel
                     @Override
                     public void onSuccess(Status status) {
                         Toast.makeText(getContext(), status.getMessage(), Toast.LENGTH_SHORT).show();
-                        mItems.remove(item);
-                        mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                        getAllRecommendations();
                     }
 
                     @Override
@@ -72,7 +72,6 @@ public class SuggestionFragment extends Fragment implements SpellsAdapter.OnSpel
             }
         }
     };
-    private User mUser;
 
     @Nullable
     @Override
@@ -129,12 +128,10 @@ public class SuggestionFragment extends Fragment implements SpellsAdapter.OnSpel
         mService.getAll(mUser, new Callback<List<Recommendation>>() {
             @Override
             public void onSuccess(List<Recommendation> recommendations) {
-                if (mItems.size() > 0) {
-                    mItems.clear();
-                }
+                mItems.clear();
                 List<ListItem> items = parseItems(recommendations);
                 mItems.addAll(items);
-                mAdapter.notifyItemRangeChanged(0, mItems.size());
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -142,5 +139,11 @@ public class SuggestionFragment extends Fragment implements SpellsAdapter.OnSpel
                 Toast.makeText(getContext(), status.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        getAllRecommendations();
+        super.onResume();
     }
 }

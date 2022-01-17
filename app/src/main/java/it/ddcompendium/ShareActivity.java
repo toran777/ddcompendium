@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -41,8 +42,10 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
         mSpell = getIntent().getParcelableExtra("spell");
         mUser = getIntent().getParcelableExtra("user");
 
-        mRecyclerView = findViewById(R.id.recyclerView);
         mAdapter = new UserAdapter(mUsers, this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
         mServiceRecs = new RecommendationServiceImpl(this);
         mServiceUser = new UsersServiceImpl(this);
@@ -56,6 +59,7 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
         getMenuInflater().inflate(R.menu.menu_share, menu);
         MenuItem search = menu.findItem(R.id.menu_search);
         SearchView searchView = ((SearchView) search.getActionView());
+        searchView.setOnQueryTextListener(this);
         searchView.setMaxWidth(Integer.MAX_VALUE);
         return super.onCreateOptionsMenu(menu);
     }
@@ -70,6 +74,7 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
                     mUsers.clear();
                 mUsers.add(user);
                 mAdapter.notifyItemInserted(0);
+                submitted = false;
             }
 
             @Override
@@ -94,10 +99,11 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
     public void onClick(int position) {
         User user = mUsers.get(position);
 
-        mServiceRecs.add(user.getId(), mUser.getId(), mSpell.getId(), new Callback<Status>() {
+        mServiceRecs.add(mUser.getId(), user.getId(), mSpell.getId(), new Callback<Status>() {
             @Override
             public void onSuccess(Status status) {
                 Toast.makeText(getApplicationContext(), "Spell shared successfully with " + user.getUsername(), Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
