@@ -1,16 +1,16 @@
 package it.ddcompendium.service.responses;
 
-import java.util.List;
+import it.ddcompendium.entities.Character;
 
-public class ListResponse<T> {
-    private List<T> data;
+public class CharacterStatusResponse {
+    private Character data;
     private Status status;
 
-    public List<T> getData() {
+    public Character getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(Character data) {
         this.data = data;
     }
 

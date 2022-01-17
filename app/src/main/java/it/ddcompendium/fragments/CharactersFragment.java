@@ -27,13 +27,13 @@ import it.ddcompendium.CharacterDetailActivity;
 import it.ddcompendium.InsertCharacter;
 import it.ddcompendium.R;
 import it.ddcompendium.entities.Character;
-import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.patterns.Observer;
 import it.ddcompendium.recyclerview.adapters.CharactersAdapter;
 import it.ddcompendium.requests.Callback;
 import it.ddcompendium.service.CharactersService;
 import it.ddcompendium.service.impl.CharactersServiceImpl;
+import it.ddcompendium.service.responses.Status;
 
 public class CharactersFragment extends Fragment implements CharactersAdapter.OnCharacterClick, View.OnClickListener, Observer<Character>, SearchView.OnQueryTextListener {
     private final String TAG = CharactersFragment.class.getSimpleName();

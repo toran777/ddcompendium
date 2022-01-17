@@ -14,7 +14,7 @@ import it.ddcompendium.requests.Callback;
 import it.ddcompendium.requests.RequestsCallback;
 import it.ddcompendium.requests.RequestsType;
 import it.ddcompendium.service.SpellsService;
-import it.ddcompendium.service.responses.ListResponse;
+import it.ddcompendium.service.responses.SpellListStatus;
 import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.service.responses.StatusResponse;
 
@@ -33,7 +33,7 @@ public class SpellsServiceImpl implements SpellsService {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                ListResponse<Spell> response = GSON.fromJson(jsonString, ListResponse.class);
+                SpellListStatus response = GSON.fromJson(jsonString, SpellListStatus.class);
 
                 if (response.getStatus().getCode() == 0)
                     callback.onSuccess(response.getData());
@@ -102,11 +102,11 @@ public class SpellsServiceImpl implements SpellsService {
         HashMap<String, String> data = new HashMap<>();
         data.put("query", query);
 
-        requests.post(Request.Method.POST, SERVER_URL + "/QueryServlet", data, new RequestsCallback() {
+        requests.post(Request.Method.POST, SERVER_URL + "/QuerySpells", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                ListResponse<Spell> response = GSON.fromJson(jsonString, ListResponse.class);
+                SpellListStatus response = GSON.fromJson(jsonString, SpellListStatus.class);
 
                 if (response.getStatus().getCode() == 0)
                     callback.onSuccess(response.getData());

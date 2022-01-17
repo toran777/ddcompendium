@@ -15,8 +15,8 @@ import it.ddcompendium.requests.Callback;
 import it.ddcompendium.requests.RequestsCallback;
 import it.ddcompendium.requests.RequestsType;
 import it.ddcompendium.service.CharactersService;
-import it.ddcompendium.service.responses.ListResponse;
-import it.ddcompendium.service.responses.Response;
+import it.ddcompendium.service.responses.CharacterListStatusResponse;
+import it.ddcompendium.service.responses.CharacterStatusResponse;
 import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.service.responses.StatusResponse;
 
@@ -36,7 +36,7 @@ public class CharactersServiceImpl implements CharactersService {
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
                 try {
-                    Response<Character> response = GSON.fromJson(jsonString, Response.class);
+                    CharacterStatusResponse response = GSON.fromJson(jsonString, CharacterStatusResponse.class);
                     if (response.getStatus().getCode() == 0) {
                         Character character = response.getData();
                         callback.onSuccess(character);
@@ -64,7 +64,7 @@ public class CharactersServiceImpl implements CharactersService {
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
                 try {
-                    ListResponse<Character> response = GSON.fromJson(jsonString, ListResponse.class);
+                    CharacterListStatusResponse response = GSON.fromJson(jsonString, CharacterListStatusResponse.class);
                     if (response.getStatus().getCode() == 0) {
                         List<Character> characters = response.getData();
                         callback.onSuccess(characters);

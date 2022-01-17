@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> titles = new ArrayList<>();
         titles.add("CHARACTERS");
         titles.add("SPELLS");
+        titles.add("RECOMMEND");
 
         new TabLayoutMediator(mTabs, mViewPager, (tab, position) -> tab.setText(titles.get(position))).attach();
     }

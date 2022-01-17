@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import it.ddcompendium.fragments.CharactersFragment;
 import it.ddcompendium.fragments.SpellsFragment;
+import it.ddcompendium.fragments.SuggestionFragment;
 
 public class FragmentPagerAdapter extends FragmentStateAdapter {
 
@@ -26,6 +27,9 @@ public class FragmentPagerAdapter extends FragmentStateAdapter {
             case 1:
                 fragment = new SpellsFragment();
                 break;
+            case 2:
+                fragment = new SuggestionFragment();
+                break;
         }
 
         assert fragment != null;
@@ -34,6 +38,6 @@ public class FragmentPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }

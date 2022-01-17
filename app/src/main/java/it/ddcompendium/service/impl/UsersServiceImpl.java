@@ -16,8 +16,8 @@ import it.ddcompendium.requests.Callback;
 import it.ddcompendium.requests.RequestsCallback;
 import it.ddcompendium.requests.RequestsType;
 import it.ddcompendium.service.UsersService;
-import it.ddcompendium.service.responses.Response;
 import it.ddcompendium.service.responses.Status;
+import it.ddcompendium.service.responses.UserStatusResponse;
 
 public class UsersServiceImpl implements UsersService {
     private static final String TAG = UsersServiceImpl.class.getSimpleName();
@@ -41,7 +41,7 @@ public class UsersServiceImpl implements UsersService {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                Response<User> userStatus = GSON.fromJson(jsonString, Response.class);
+                UserStatusResponse userStatus = GSON.fromJson(jsonString, UserStatusResponse.class);
 
                 if (userStatus.getStatus().getCode() == 0)
                     callback.onSuccess(userStatus.getData());
@@ -69,10 +69,35 @@ public class UsersServiceImpl implements UsersService {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                Response<User> userStatus = GSON.fromJson(jsonString, Response.class);
+                UserStatusResponse userStatus = GSON.fromJson(jsonString, UserStatusResponse.class);
 
                 if (userStatus.getStatus().getCode() == 0)
                     callback.onSuccess(userStatus.getStatus());
+                else
+                    callback.onFailure(userStatus.getStatus());
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.e(TAG, "onError: ", error);
+                callback.onFailure(new Status(error.toString()));
+            }
+        });
+    }
+
+    @Override
+    public void findUser(String username, Callback<User> callback) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("username", username);
+
+        mRequests.post(Request.Method.POST, SERVER_URL + "/QueryUser", data, new RequestsCallback() {
+            @Override
+            public void onResponse(String jsonString) {
+                Log.d(TAG, "onResponse: " + jsonString);
+                UserStatusResponse userStatus = GSON.fromJson(jsonString, UserStatusResponse.class);
+
+                if (userStatus.getStatus().getCode() == 0)
+                    callback.onSuccess(userStatus.getData());
                 else
                     callback.onFailure(userStatus.getStatus());
             }

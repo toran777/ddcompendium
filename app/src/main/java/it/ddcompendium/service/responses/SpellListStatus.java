@@ -1,14 +1,18 @@
 package it.ddcompendium.service.responses;
 
-public class Response<T> {
-    private T data;
+import java.util.List;
+
+import it.ddcompendium.entities.Spell;
+
+public class SpellListStatus {
+    private List<Spell> data;
     private Status status;
 
-    public T getData() {
+    public List<Spell> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<Spell> data) {
         this.data = data;
     }
 
@@ -19,5 +23,4 @@ public class Response<T> {
     public void setStatus(Status status) {
         this.status = status;
     }
-
 }
