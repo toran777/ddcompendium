@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import it.ddcompendium.entities.Character;
-import it.ddcompendium.entities.Status;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.patterns.Observer;
 import it.ddcompendium.requests.Callback;
@@ -28,12 +28,12 @@ public class InsertCharacter extends DialogFragment {
     private Spinner mClasses;
 
     // Variables
-    private Context mContext;
-    private Observer mObserver;
+    private final Context mContext;
+    private final Observer<Character> mObserver;
     private CharactersService mService;
-    private User mUser;
+    private final User mUser;
 
-    public InsertCharacter(Context context, Observer observer, User user) {
+    public InsertCharacter(Context context, Observer<Character> observer, User user) {
         this.mContext = context;
         this.mObserver = observer;
         this.mUser = user;
@@ -64,7 +64,7 @@ public class InsertCharacter extends DialogFragment {
                     @Override
                     public void onSuccess(Status status) {
                         Toast.makeText(mContext, "Character created successfully", Toast.LENGTH_SHORT).show();
-                        mObserver.onUpdate();
+                        mObserver.onUpdate(character);
                         dismiss();
                     }
 

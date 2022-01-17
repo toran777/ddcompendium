@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import it.ddcompendium.customviews.ProgressBarButton;
 import it.ddcompendium.customviews.TextViewButton;
-import it.ddcompendium.entities.Status;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.requests.Callback;
 import it.ddcompendium.service.UsersService;
@@ -107,8 +107,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onFailure(Status status) {
-                    Toast.makeText(getApplicationContext(), status.getMessage(), Toast.LENGTH_SHORT).show();
-                    mLogin.onUpdate();
+                    Toast.makeText(LoginActivity.this, status.getMessage(), Toast.LENGTH_SHORT).show();
+                    mLogin.onUpdate(null);
                 }
             });
 

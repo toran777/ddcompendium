@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,14 +18,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import it.ddcompendium.adapters.FragmentPagerAdapter;
-import it.ddcompendium.entities.Character;
-import it.ddcompendium.entities.Spell;
-import it.ddcompendium.fragments.CharactersFragment;
 
-public class MainActivity extends AppCompatActivity implements InsertSpell.OnSpellAdd {
+public class MainActivity extends AppCompatActivity {
     // UI Components
     private ViewPager2 mViewPager;
     private FragmentStateAdapter mAdapter;
@@ -92,17 +87,5 @@ public class MainActivity extends AppCompatActivity implements InsertSpell.OnSpe
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSpellAdded(Character character, Spell spell) {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-
-        for (Fragment f : fragments) {
-            if (f instanceof CharactersFragment) {
-                CharactersFragment fragment = (CharactersFragment) f;
-                fragment.onSpellAdded(character, spell);
-            }
-        }
     }
 }

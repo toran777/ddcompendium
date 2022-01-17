@@ -11,13 +11,13 @@ import com.android.volley.VolleyError;
 
 import java.util.HashMap;
 
-import it.ddcompendium.entities.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.requests.Callback;
 import it.ddcompendium.requests.RequestsCallback;
 import it.ddcompendium.requests.RequestsType;
 import it.ddcompendium.service.UsersService;
-import it.ddcompendium.service.responses.UserStatusResponse;
+import it.ddcompendium.service.responses.Response;
+import it.ddcompendium.service.responses.Status;
 
 public class UsersServiceImpl implements UsersService {
     private static final String TAG = UsersServiceImpl.class.getSimpleName();
@@ -41,10 +41,10 @@ public class UsersServiceImpl implements UsersService {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                UserStatusResponse userStatus = GSON.fromJson(jsonString, UserStatusResponse.class);
+                Response<User> userStatus = GSON.fromJson(jsonString, Response.class);
 
                 if (userStatus.getStatus().getCode() == 0)
-                    callback.onSuccess(userStatus.getUser());
+                    callback.onSuccess(userStatus.getData());
                 else
                     callback.onFailure(userStatus.getStatus());
             }
@@ -69,7 +69,7 @@ public class UsersServiceImpl implements UsersService {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                UserStatusResponse userStatus = GSON.fromJson(jsonString, UserStatusResponse.class);
+                Response<User> userStatus = GSON.fromJson(jsonString, Response.class);
 
                 if (userStatus.getStatus().getCode() == 0)
                     callback.onSuccess(userStatus.getStatus());

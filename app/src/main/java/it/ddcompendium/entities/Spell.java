@@ -3,6 +3,8 @@ package it.ddcompendium.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -189,5 +191,13 @@ public class Spell implements Parcelable {
         values.put("Description", desc);
 
         return values;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Spell{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package it.ddcompendium.recyclerview.adapters;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.name.setText(mSpells.get(position).getName());
-        holder.description.setText(mSpells.get(position).getDesc());
+        holder.description.setText(Html.fromHtml(mSpells.get(position).getDesc(), Html.FROM_HTML_MODE_LEGACY));
     }
 
     @Override

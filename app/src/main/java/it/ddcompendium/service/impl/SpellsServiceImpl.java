@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import it.ddcompendium.entities.Spell;
-import it.ddcompendium.entities.Status;
 import it.ddcompendium.requests.Callback;
 import it.ddcompendium.requests.RequestsCallback;
 import it.ddcompendium.requests.RequestsType;
 import it.ddcompendium.service.SpellsService;
-import it.ddcompendium.service.responses.SpellsStatusResponse;
+import it.ddcompendium.service.responses.ListResponse;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.service.responses.StatusResponse;
 
 public class SpellsServiceImpl implements SpellsService {
@@ -28,15 +28,15 @@ public class SpellsServiceImpl implements SpellsService {
     }
 
     @Override
-    public void getAll(Callback<List<Spell>> callback) {
-        requests.get(SERVER_URL + "/Spell", new RequestsCallback() {
+    public void getAll(int offset, Callback<List<Spell>> callback) {
+        requests.get(SERVER_URL + "/Spell?offset=" + offset, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
-                SpellsStatusResponse response = GSON.fromJson(jsonString, SpellsStatusResponse.class);
+                ListResponse<Spell> response = GSON.fromJson(jsonString, ListResponse.class);
 
                 if (response.getStatus().getCode() == 0)
-                    callback.onSuccess(response.getSpells());
+                    callback.onSuccess(response.getData());
                 else
                     callback.onFailure(response.getStatus());
             }
@@ -85,6 +85,31 @@ public class SpellsServiceImpl implements SpellsService {
 
                 if (response.getStatus().getCode() == 0)
                     callback.onSuccess(response.getStatus());
+                else
+                    callback.onFailure(response.getStatus());
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.e(TAG, "onError: ", error);
+                callback.onFailure(new Status(error.toString()));
+            }
+        });
+    }
+
+    @Override
+    public void search(String query, Callback<List<Spell>> callback) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("query", query);
+
+        requests.post(Request.Method.POST, SERVER_URL + "/QueryServlet", data, new RequestsCallback() {
+            @Override
+            public void onResponse(String jsonString) {
+                Log.d(TAG, "onResponse: " + jsonString);
+                ListResponse<Spell> response = GSON.fromJson(jsonString, ListResponse.class);
+
+                if (response.getStatus().getCode() == 0)
+                    callback.onSuccess(response.getData());
                 else
                     callback.onFailure(response.getStatus());
             }

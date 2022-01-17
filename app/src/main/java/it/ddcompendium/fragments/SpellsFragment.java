@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -21,12 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.ddcompendium.MainActivity;
 import it.ddcompendium.R;
 import it.ddcompendium.SpellDetailActivity;
-import it.ddcompendium.entities.Character;
 import it.ddcompendium.entities.Spell;
-import it.ddcompendium.entities.Status;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.recyclerview.adapters.SpellsAdapter;
 import it.ddcompendium.requests.Callback;
@@ -35,16 +31,17 @@ import it.ddcompendium.service.impl.SpellsServiceImpl;
 
 public class SpellsFragment extends Fragment implements SpellsAdapter.OnSpellClick, SearchView.OnQueryTextListener {
     private static final String TAG = SpellsFragment.class.getSimpleName();
+    private final List<Spell> mSpells = new ArrayList<>();
+    private final List<Spell> mCurrentList = new ArrayList<>();
     // UI Components
     private RecyclerView mRecyclerView;
-
     // Variables
     private SpellsService mService;
     private SpellsAdapter mAdapter;
-    private List<Spell> mSpells = new ArrayList<>();
-    private List<Spell> mFullList = new ArrayList<>();
-    private ActivityResultLauncher<Intent> mResultLauncher;
     private User mUser;
+    private int mOffset = 30;
+    private boolean isInSearch = false;
+    private boolean submitted = false;
 
     @Nullable
     @Override
@@ -57,6 +54,18 @@ public class SpellsFragment extends Fragment implements SpellsAdapter.OnSpellCli
         mAdapter = new SpellsAdapter(mSpells, this);
         mRecyclerView.setAdapter(mAdapter);
 
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1) && !isInSearch) {
+                    mOffset += 30;
+                    getSpells();
+                }
+            }
+        });
+
         mService = new SpellsServiceImpl(getContext());
 
         Activity activity = getActivity();
@@ -67,30 +76,14 @@ public class SpellsFragment extends Fragment implements SpellsAdapter.OnSpellCli
         getSpells();
         setHasOptionsMenu(true);
 
-        mResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            Intent data = result.getData();
-
-            if (data != null) {
-                Character character = data.getParcelableExtra("character");
-                Spell spell = data.getParcelableExtra("spell");
-                ((MainActivity) getActivity()).onSpellAdded(character, spell);
-            }
-        });
-
         return view;
     }
 
     private void getSpells() {
-        mService.getAll(new Callback<List<Spell>>() {
+        mService.getAll(mOffset, new Callback<List<Spell>>() {
             @Override
             public void onSuccess(List<Spell> spells) {
-                if (mSpells.size() > 0) {
-                    mSpells.clear();
-                    mFullList.clear();
-                }
-
                 mSpells.addAll(spells);
-                mFullList.addAll(spells);
                 mAdapter.notifyItemRangeChanged(0, mSpells.size());
             }
 
@@ -106,7 +99,7 @@ public class SpellsFragment extends Fragment implements SpellsAdapter.OnSpellCli
         Intent intent = new Intent(getContext(), SpellDetailActivity.class);
         intent.putExtra("spell", mSpells.get(position));
         intent.putExtra("user", mUser);
-        mResultLauncher.launch(intent);
+        startActivity(intent);
     }
 
     @Override
@@ -120,24 +113,36 @@ public class SpellsFragment extends Fragment implements SpellsAdapter.OnSpellCli
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        isInSearch = true;
+        submitted = true;
+        mCurrentList.clear();
+        mCurrentList.addAll(mSpells);
+        mSpells.clear();
+        mService.search(query, new Callback<List<Spell>>() {
+            @Override
+            public void onSuccess(List<Spell> spells) {
+                mSpells.addAll(spells);
+                mAdapter.notifyItemRangeChanged(0, mSpells.size());
+            }
+
+            @Override
+            public void onFailure(Status status) {
+                Toast.makeText(getContext(), status.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (mSpells.size() > 0) {
+        if (newText.equals("") && submitted) {
+            submitted = false;
+            isInSearch = false;
             mSpells.clear();
-            mAdapter.notifyItemRangeRemoved(0, mFullList.size());
+            mSpells.addAll(mCurrentList);
+            mAdapter.notifyItemRangeChanged(0, mSpells.size());
+            mCurrentList.clear();
         }
-
-        for (Spell s : mFullList) {
-            if (s.getName().toLowerCase().contains(newText.toLowerCase())) {
-                mSpells.add(s);
-            }
-        }
-
-        mAdapter.notifyItemRangeInserted(0, mSpells.size());
-
         return false;
     }
 }

@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -27,11 +25,9 @@ import java.util.List;
 
 import it.ddcompendium.CharacterDetailActivity;
 import it.ddcompendium.InsertCharacter;
-import it.ddcompendium.InsertSpell;
 import it.ddcompendium.R;
 import it.ddcompendium.entities.Character;
-import it.ddcompendium.entities.Spell;
-import it.ddcompendium.entities.Status;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.patterns.Observer;
 import it.ddcompendium.recyclerview.adapters.CharactersAdapter;
@@ -39,19 +35,17 @@ import it.ddcompendium.requests.Callback;
 import it.ddcompendium.service.CharactersService;
 import it.ddcompendium.service.impl.CharactersServiceImpl;
 
-public class CharactersFragment extends Fragment implements CharactersAdapter.OnCharacterClick, View.OnClickListener, Observer, SearchView.OnQueryTextListener, InsertSpell.OnSpellAdd {
-    public static int DELETE_SPELL = 104;
+public class CharactersFragment extends Fragment implements CharactersAdapter.OnCharacterClick, View.OnClickListener, Observer<Character>, SearchView.OnQueryTextListener {
     private final String TAG = CharactersFragment.class.getSimpleName();
+    // Variables
+    private final List<Character> mFullList = new ArrayList<>();
+    private final List<Character> mCharacters = new ArrayList<>();
     // UI Components
     private RecyclerView mRecyclerView;
     private FloatingActionButton mButton;
-    // Variables
     private CharactersAdapter mAdapter;
-    private List<Character> mCharacters = new ArrayList<>();
-    private List<Character> mFullList = new ArrayList<>();
     private CharactersService mService;
-    private ActivityResultLauncher<Intent> mResultLauncher;
-    private ItemTouchHelper.SimpleCallback mHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    private final ItemTouchHelper.SimpleCallback mHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -65,6 +59,7 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
                 @Override
                 public void onSuccess(Status status) {
                     Toast.makeText(getContext(), status.getMessage(), Toast.LENGTH_SHORT).show();
+                    mFullList.remove(character);
                     mCharacters.remove(character);
                     mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 }
@@ -88,13 +83,9 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
         mButton = view.findViewById(R.id.fab);
         mButton.setOnClickListener(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new CharactersAdapter(mCharacters, this);
-        mRecyclerView.setAdapter(mAdapter);
-        new ItemTouchHelper(mHelper).attachToRecyclerView(mRecyclerView);
-
         mService = new CharactersServiceImpl(getContext());
+
+        initRecyclerView();
 
         Activity activity = getActivity();
 
@@ -104,22 +95,15 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
         getCharacters();
         setHasOptionsMenu(true);
 
-        mResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            Intent data = result.getData();
-            assert data != null;
-            Character character = data.getParcelableExtra("character");
-
-            for (int i = 0; i < mCharacters.size(); i++) {
-                Character c = mCharacters.get(i);
-                if (c.getId() == character.getId()) {
-                    c.setSpells(character.getSpells());
-                    mAdapter.notifyItemChanged(i);
-                    break;
-                }
-            }
-        });
-
         return view;
+    }
+
+    private void initRecyclerView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new CharactersAdapter(mCharacters, this);
+        mRecyclerView.setAdapter(mAdapter);
+        new ItemTouchHelper(mHelper).attachToRecyclerView(mRecyclerView);
     }
 
     private void getCharacters() {
@@ -148,8 +132,7 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
         Log.i(TAG, "onClick: " + character);
         Intent intent = new Intent(getContext(), CharacterDetailActivity.class);
         intent.putExtra("character", character);
-        intent.putExtra("user", mUser);
-        mResultLauncher.launch(intent);
+        startActivity(intent);
     }
 
     @Override
@@ -158,8 +141,10 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
     }
 
     @Override
-    public void onUpdate() {
-        getCharacters();
+    public void onUpdate(Character c) {
+        mCharacters.add(c);
+        mFullList.add(c);
+        mAdapter.notifyItemInserted(mCharacters.size());
     }
 
     @Override
@@ -192,17 +177,5 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
         mAdapter.notifyItemRangeInserted(0, mCharacters.size());
 
         return false;
-    }
-
-    @Override
-    public void onSpellAdded(Character character, Spell spell) {
-        for (int i = 0; i < mCharacters.size(); i++) {
-            Character c = mCharacters.get(i);
-            if (c.getId() == character.getId()) {
-                c.getSpells().add(spell);
-                mAdapter.notifyItemChanged(i);
-                break;
-            }
-        }
     }
 }

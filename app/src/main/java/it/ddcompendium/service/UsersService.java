@@ -1,6 +1,6 @@
 package it.ddcompendium.service;
 
-import it.ddcompendium.entities.Status;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.requests.Callback;
 

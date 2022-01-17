@@ -18,8 +18,7 @@ import java.util.List;
 
 import it.ddcompendium.entities.Character;
 import it.ddcompendium.entities.Spell;
-import it.ddcompendium.entities.Status;
-import it.ddcompendium.entities.User;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.requests.Callback;
 import it.ddcompendium.service.CharactersService;
 import it.ddcompendium.service.SpellsService;
@@ -27,22 +26,19 @@ import it.ddcompendium.service.impl.CharactersServiceImpl;
 import it.ddcompendium.service.impl.SpellsServiceImpl;
 
 public class InsertSpell extends DialogFragment {
+    // Variables
+    private final Context mContext;
+    private final Spell mSpell;
+    private final Integer mId;
     // UI Components
     private Spinner mCharacters;
-
-    // Variables
-    private Context mContext;
     private SpellsService mSpellsService;
     private CharactersService mCharactersService;
-    private Spell mSpell;
-    private User mUser;
-    private OnSpellAdd mOnSpellAdd;
 
-    public InsertSpell(Context context, OnSpellAdd onSpellAdd, Spell spell, User user) {
+    public InsertSpell(Context context, Spell spell, Integer id) {
         this.mContext = context;
         this.mSpell = spell;
-        this.mUser = user;
-        this.mOnSpellAdd = onSpellAdd;
+        this.mId = id;
     }
 
     @NonNull
@@ -57,7 +53,7 @@ public class InsertSpell extends DialogFragment {
         mSpellsService = new SpellsServiceImpl(getContext());
         mCharactersService = new CharactersServiceImpl(getContext());
 
-        mCharactersService.getAll(mUser.getId(), new Callback<List<Character>>() {
+        mCharactersService.getAll(mId, new Callback<List<Character>>() {
             @Override
             public void onSuccess(List<Character> characters) {
                 ArrayAdapter<Character> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, characters);
@@ -79,7 +75,6 @@ public class InsertSpell extends DialogFragment {
                     @Override
                     public void onSuccess(Status status) {
                         Toast.makeText(mContext, "Spell added successfully to " + character.getName(), Toast.LENGTH_SHORT).show();
-                        mOnSpellAdd.onSpellAdded(character, mSpell);
                         dismiss();
                     }
 
@@ -97,9 +92,5 @@ public class InsertSpell extends DialogFragment {
                 .setView(view);
 
         return builder.create();
-    }
-
-    public interface OnSpellAdd {
-        void onSpellAdded(Character character, Spell spell);
     }
 }

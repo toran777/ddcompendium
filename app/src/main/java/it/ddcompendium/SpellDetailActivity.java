@@ -1,8 +1,8 @@
 package it.ddcompendium;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -15,11 +15,10 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.HashMap;
 import java.util.Set;
 
-import it.ddcompendium.entities.Character;
 import it.ddcompendium.entities.Spell;
 import it.ddcompendium.entities.User;
 
-public class SpellDetailActivity extends AppCompatActivity implements InsertSpell.OnSpellAdd {
+public class SpellDetailActivity extends AppCompatActivity {
     // UI Components
     private Toolbar mToolbar;
     private LinearLayout mLayout;
@@ -60,7 +59,7 @@ public class SpellDetailActivity extends AppCompatActivity implements InsertSpel
             TextView tvCont = new TextView(this);
             tvCont.setPadding(0, 10, 0, 0);
             tvCont.setTextSize(16);
-            tvCont.setText(values.get(s));
+            tvCont.setText(Html.fromHtml(values.get(s), Html.FROM_HTML_MODE_LEGACY));
             mLayout.addView(tvCont);
         }
     }
@@ -79,18 +78,9 @@ public class SpellDetailActivity extends AppCompatActivity implements InsertSpel
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_add) {
-            new InsertSpell(this, this, mSpell, mUser).show(getSupportFragmentManager(), null);
+            new InsertSpell(this, mSpell, mUser.getId()).show(getSupportFragmentManager(), null);
         }
 
         return true;
-    }
-
-    @Override
-    public void onSpellAdded(Character character, Spell spell) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("character", character);
-        intent.putExtra("spell", spell);
-        setResult(0, intent);
-        finish();
     }
 }

@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import it.ddcompendium.R;
 import it.ddcompendium.patterns.Observer;
 
-public class ProgressBarButton extends RelativeLayout implements View.OnClickListener, Observer {
+public class ProgressBarButton extends RelativeLayout implements View.OnClickListener, Observer<Void> {
     // UI Components
     private final Button mButton;
     private final ProgressBar mProgressBar;
@@ -45,7 +45,7 @@ public class ProgressBarButton extends RelativeLayout implements View.OnClickLis
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdate(Void v) {
         mButton.setEnabled(true);
         mButton.setText(mButtonText);
         mProgressBar.setVisibility(View.GONE);

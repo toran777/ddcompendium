@@ -1,4 +1,6 @@
-package it.ddcompendium.entities;
+package it.ddcompendium.service.responses;
+
+import androidx.annotation.NonNull;
 
 public class Status {
     private Integer code;
@@ -32,6 +34,7 @@ public class Status {
         this.message = message;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Status{" +

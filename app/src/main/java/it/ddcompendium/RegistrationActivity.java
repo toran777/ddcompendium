@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import it.ddcompendium.customviews.ProgressBarButton;
 import it.ddcompendium.customviews.TextViewButton;
-import it.ddcompendium.entities.Status;
+import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.requests.Callback;
 import it.ddcompendium.service.UsersService;
 import it.ddcompendium.service.impl.UsersServiceImpl;
@@ -91,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 @Override
                 public void onFailure(Status status) {
                     Toast.makeText(getApplicationContext(), status.getMessage(), Toast.LENGTH_SHORT).show();
-                    mSignUpButton.onUpdate();
+                    mSignUpButton.onUpdate(null);
                 }
             });
 

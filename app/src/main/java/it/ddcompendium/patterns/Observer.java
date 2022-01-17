@@ -1,5 +1,5 @@
 package it.ddcompendium.patterns;
 
-public interface Observer {
-    void onUpdate();
+public interface Observer<T> {
+    void onUpdate(T t);
 }
