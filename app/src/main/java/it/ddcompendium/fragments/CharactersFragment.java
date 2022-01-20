@@ -142,9 +142,7 @@ public class CharactersFragment extends Fragment implements CharactersAdapter.On
 
     @Override
     public void onUpdate(Character c) {
-        mCharacters.add(c);
-        mFullList.add(c);
-        mAdapter.notifyItemInserted(mCharacters.size());
+        getCharacters();
     }
 
     @Override

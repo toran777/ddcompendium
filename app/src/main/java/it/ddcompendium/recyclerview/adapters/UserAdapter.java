@@ -44,8 +44,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.Holder> {
     }
 
     public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView username;
-        OnUserClick mOnUserClick;
+        final TextView username;
+        final OnUserClick mOnUserClick;
 
         public Holder(@NonNull View itemView, OnUserClick onSpellClick) {
             super(itemView);

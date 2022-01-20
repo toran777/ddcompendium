@@ -63,7 +63,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private static class HeaderHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        final TextView textView;
 
         public HeaderHolder(View view) {
             super(view);

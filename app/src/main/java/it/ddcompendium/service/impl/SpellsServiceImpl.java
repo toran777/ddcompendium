@@ -29,7 +29,7 @@ public class SpellsServiceImpl implements SpellsService {
 
     @Override
     public void getAll(int offset, Callback<List<Spell>> callback) {
-        requests.get(SERVER_URL + "/Spell?offset=" + offset, new RequestsCallback() {
+        requests.get(SERVER_URL + "/spells?offset=" + offset, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
@@ -51,7 +51,7 @@ public class SpellsServiceImpl implements SpellsService {
 
     @Override
     public void delete(Integer idCharacter, Integer idSpell, Callback<Status> callback) {
-        requests.post(Request.Method.DELETE, SERVER_URL + "/Spell?idCharacter=" + idCharacter + "&idSpell=" + idSpell, null, new RequestsCallback() {
+        requests.post(Request.Method.DELETE, SERVER_URL + "/spells?idCharacter=" + idCharacter + "&idSpell=" + idSpell, null, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
@@ -77,7 +77,7 @@ public class SpellsServiceImpl implements SpellsService {
         data.put("idCharacter", idCharacter + "");
         data.put("idSpell", idSpell + "");
 
-        requests.post(Request.Method.POST, SERVER_URL + "/Spell", data, new RequestsCallback() {
+        requests.post(Request.Method.POST, SERVER_URL + "/spells", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
@@ -102,7 +102,7 @@ public class SpellsServiceImpl implements SpellsService {
         HashMap<String, String> data = new HashMap<>();
         data.put("query", query);
 
-        requests.post(Request.Method.POST, SERVER_URL + "/QuerySpells", data, new RequestsCallback() {
+        requests.post(Request.Method.POST, SERVER_URL + "/querySpell", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);

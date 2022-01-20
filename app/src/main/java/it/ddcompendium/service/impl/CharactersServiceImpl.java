@@ -31,7 +31,7 @@ public class CharactersServiceImpl implements CharactersService {
 
     @Override
     public void getOne(Integer id, Callback<Character> callback) {
-        mRequests.get(SERVER_URL + "/CharacterDetail?id=" + id, new RequestsCallback() {
+        mRequests.get(SERVER_URL + "/character/detail?id=" + id, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
@@ -59,7 +59,7 @@ public class CharactersServiceImpl implements CharactersService {
 
     @Override
     public void getAll(Integer id, Callback<List<Character>> callback) {
-        mRequests.get(SERVER_URL + "/Character?id=" + id, new RequestsCallback() {
+        mRequests.get(SERVER_URL + "/characters?id=" + id, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
@@ -89,10 +89,10 @@ public class CharactersServiceImpl implements CharactersService {
     public void insert(Character character, Callback<Status> callback) {
         HashMap<String, String> data = new HashMap<>();
         data.put("name", character.getName());
-        data.put("class", character.getClasse());
+        data.put("classe", character.getClasse());
         data.put("idUser", character.getIdUser() + "");
 
-        mRequests.post(Request.Method.POST, SERVER_URL + "/Character", data, new RequestsCallback() {
+        mRequests.post(Request.Method.POST, SERVER_URL + "/characters", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
@@ -114,7 +114,7 @@ public class CharactersServiceImpl implements CharactersService {
 
     @Override
     public void delete(Integer id, Callback<Status> callback) {
-        mRequests.post(Request.Method.DELETE, SERVER_URL + "/Character?id=" + id, null, new RequestsCallback() {
+        mRequests.post(Request.Method.DELETE, SERVER_URL + "/characters?id=" + id, null, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);

@@ -37,7 +37,7 @@ public class UsersServiceImpl implements UsersService {
         data.put("password", password);
         data.put("action", "login");
 
-        mRequests.post(Request.Method.POST, SERVER_URL + "/User", data, new RequestsCallback() {
+        mRequests.post(Request.Method.POST, SERVER_URL + "/login", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
@@ -65,7 +65,7 @@ public class UsersServiceImpl implements UsersService {
         data.put("password", password);
         data.put("action", "registration");
 
-        mRequests.post(Request.Method.POST, SERVER_URL + "/User", data, new RequestsCallback() {
+        mRequests.post(Request.Method.POST, SERVER_URL + "/register", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
@@ -90,7 +90,7 @@ public class UsersServiceImpl implements UsersService {
         HashMap<String, String> data = new HashMap<>();
         data.put("query", username);
 
-        mRequests.post(Request.Method.POST, SERVER_URL + "/QueryUser", data, new RequestsCallback() {
+        mRequests.post(Request.Method.POST, SERVER_URL + "/queryUser", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);

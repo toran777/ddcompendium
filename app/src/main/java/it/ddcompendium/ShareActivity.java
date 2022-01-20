@@ -32,7 +32,6 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
     private RecyclerView mRecyclerView;
     private User mUser;
     private Spell mSpell;
-    private boolean submitted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +58,7 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
         getMenuInflater().inflate(R.menu.menu_share, menu);
         MenuItem search = menu.findItem(R.id.menu_search);
         SearchView searchView = ((SearchView) search.getActionView());
+        searchView.setQueryHint("Who do you want to share it with?");
         searchView.setOnQueryTextListener(this);
         searchView.setMaxWidth(Integer.MAX_VALUE);
         return super.onCreateOptionsMenu(menu);
@@ -66,7 +66,6 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        submitted = true;
         mServiceUser.findUser(query, new Callback<User>() {
             @Override
             public void onSuccess(User user) {
@@ -74,7 +73,6 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
                     mUsers.clear();
                 mUsers.add(user);
                 mAdapter.notifyItemInserted(0);
-                submitted = false;
             }
 
             @Override
@@ -88,9 +86,9 @@ public class ShareActivity extends AppCompatActivity implements SearchView.OnQue
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (newText.equals("") && !submitted) {
+        if (!mUsers.isEmpty()) {
             mUsers.clear();
-            mAdapter.notifyItemRemoved(0);
+            mAdapter.notifyItemRemoved(mUsers.size());
         }
         return false;
     }

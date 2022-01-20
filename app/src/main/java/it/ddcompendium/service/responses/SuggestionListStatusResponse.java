@@ -3,24 +3,14 @@ package it.ddcompendium.service.responses;
 import java.util.List;
 
 import it.ddcompendium.entities.Recommendation;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SuggestionListStatusResponse {
     private List<Recommendation> data;
     private Status status;
-
-    public List<Recommendation> getData() {
-        return data;
-    }
-
-    public void setData(List<Recommendation> data) {
-        this.data = data;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }

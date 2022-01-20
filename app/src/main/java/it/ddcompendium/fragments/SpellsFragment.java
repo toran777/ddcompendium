@@ -30,7 +30,6 @@ import it.ddcompendium.service.SpellsService;
 import it.ddcompendium.service.impl.SpellsServiceImpl;
 
 public class SpellsFragment extends Fragment implements SpellsAdapter.OnSpellClick, SearchView.OnQueryTextListener {
-    private static final String TAG = SpellsFragment.class.getSimpleName();
     private final List<Spell> mSpells = new ArrayList<>();
     private final List<Spell> mCurrentList = new ArrayList<>();
     // UI Components

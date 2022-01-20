@@ -2,7 +2,6 @@ package it.ddcompendium.service;
 
 import java.util.List;
 
-import it.ddcompendium.entities.Spell;
 import it.ddcompendium.entities.Recommendation;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.requests.Callback;

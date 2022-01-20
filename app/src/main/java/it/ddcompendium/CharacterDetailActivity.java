@@ -18,7 +18,6 @@ import java.util.List;
 
 import it.ddcompendium.entities.Character;
 import it.ddcompendium.entities.Spell;
-import it.ddcompendium.service.responses.Status;
 import it.ddcompendium.entities.User;
 import it.ddcompendium.recyclerview.adapters.SpellsAdapter;
 import it.ddcompendium.requests.Callback;
@@ -26,9 +25,10 @@ import it.ddcompendium.service.CharactersService;
 import it.ddcompendium.service.SpellsService;
 import it.ddcompendium.service.impl.CharactersServiceImpl;
 import it.ddcompendium.service.impl.SpellsServiceImpl;
+import it.ddcompendium.service.responses.Status;
+import it.ddcompendium.utils.Utils;
 
 public class CharacterDetailActivity extends AppCompatActivity implements SpellsAdapter.OnSpellClick {
-    private static final String TAG = CharacterDetailActivity.class.getSimpleName();
     private final List<Spell> mSpells = new ArrayList<>();
     // UI Components
     private CollapsingToolbarLayout mCtl;
@@ -76,34 +76,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Spells
         mCharacter = getIntent().getParcelableExtra("character");
         mCharacter.setSpells(new ArrayList<>());
         mCtl.setTitle(mCharacter.getName());
-        int resource;
-
-        switch (mCharacter.getClasse()) {
-            case "Sorcerer":
-                resource = R.drawable.sorcerer;
-                break;
-            case "Bard":
-                resource = R.drawable.bard;
-                break;
-            case "Cleric":
-                resource = R.drawable.cleric;
-                break;
-            case "Barbarian":
-                resource = R.drawable.barbarian;
-                break;
-            case "Wizard":
-                resource = R.drawable.wizard;
-                break;
-            case "Druid":
-                resource = R.drawable.druid;
-                break;
-            case "Paladin":
-                resource = R.drawable.paladin;
-                break;
-            default:
-                resource = 0;
-        }
-
+        int resource = Utils.getResourceFromClass(mCharacter);
         mImage.setImageResource(resource);
 
         mSpellsService = new SpellsServiceImpl(this);

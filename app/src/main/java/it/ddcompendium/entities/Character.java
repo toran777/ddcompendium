@@ -3,8 +3,17 @@ package it.ddcompendium.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Character implements Parcelable {
     public static final Creator<Character> CREATOR = new Creator<Character>() {
         @Override
@@ -22,9 +31,6 @@ public class Character implements Parcelable {
     private String classe;
     private List<Spell> spells;
     private int idUser;
-
-    public Character() {
-    }
 
     protected Character(Parcel in) {
         id = in.readInt();
@@ -48,46 +54,7 @@ public class Character implements Parcelable {
         parcel.writeInt(idUser);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getClasse() {
-        return classe;
-    }
-
-    public void setClasse(String classe) {
-        this.classe = classe;
-    }
-
-    public List<Spell> getSpells() {
-        return spells;
-    }
-
-    public void setSpells(List<Spell> spells) {
-        this.spells = spells;
-    }
-
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return name;

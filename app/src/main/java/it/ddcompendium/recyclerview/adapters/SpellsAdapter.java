@@ -46,8 +46,9 @@ public class SpellsAdapter extends RecyclerView.Adapter<SpellsAdapter.Holder> {
     }
 
     public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView name, description;
-        OnSpellClick mOnSpellClick;
+        final TextView name;
+        final TextView description;
+        final OnSpellClick mOnSpellClick;
 
         public Holder(@NonNull View itemView, OnSpellClick onSpellClick) {
             super(itemView);

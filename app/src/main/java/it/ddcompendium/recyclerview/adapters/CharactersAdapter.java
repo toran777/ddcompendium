@@ -13,6 +13,7 @@ import java.util.List;
 
 import it.ddcompendium.R;
 import it.ddcompendium.entities.Character;
+import it.ddcompendium.utils.Utils;
 
 public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Holder> {
     private final List<Character> characters;
@@ -34,33 +35,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Ho
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.nome.setText(characters.get(position).getName());
 
-        int resource;
-
-        switch (characters.get(position).getClasse()) {
-            case "Sorcerer":
-                resource = R.drawable.sorcerer;
-                break;
-            case "Bard":
-                resource = R.drawable.bard;
-                break;
-            case "Cleric":
-                resource = R.drawable.cleric;
-                break;
-            case "Barbarian":
-                resource = R.drawable.barbarian;
-                break;
-            case "Wizard":
-                resource = R.drawable.wizard;
-                break;
-            case "Druid":
-                resource = R.drawable.druid;
-                break;
-            case "Paladin":
-                resource = R.drawable.paladin;
-                break;
-            default:
-                resource = 0;
-        }
+        int resource = Utils.getResourceFromClass(characters.get(position));
 
         holder.image.setImageResource(resource);
     }
@@ -75,9 +50,9 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Ho
     }
 
     public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView nome;
-        ImageView image;
-        OnCharacterClick mOnCharacterClick;
+        final TextView nome;
+        final ImageView image;
+        final OnCharacterClick mOnCharacterClick;
 
         public Holder(@NonNull View itemView, OnCharacterClick onCharacterClick) {
             super(itemView);

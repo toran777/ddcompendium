@@ -30,7 +30,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     public void getAll(User to, Callback<List<Recommendation>> callback) {
-        requests.get(SERVER_URL + "/Recommend?id=" + to.getId(), new RequestsCallback() {
+        requests.get(SERVER_URL + "/recommend?id=" + to.getId(), new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.d(TAG, "onResponse: " + jsonString);
@@ -57,7 +57,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         data.put("user_to", to + "");
         data.put("spell_id", spell + "");
 
-        requests.post(Request.Method.POST, SERVER_URL + "/Recommend", data, new RequestsCallback() {
+        requests.post(Request.Method.POST, SERVER_URL + "/recommend", data, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
@@ -79,7 +79,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     public void delete(Integer id, Callback<Status> callback) {
-        requests.post(Request.Method.DELETE, SERVER_URL + "/Recommend?id=" + id, null, new RequestsCallback() {
+        requests.post(Request.Method.DELETE, SERVER_URL + "/recommend?id=" + id, null, new RequestsCallback() {
             @Override
             public void onResponse(String jsonString) {
                 Log.i(TAG, "onResponse: " + jsonString);
